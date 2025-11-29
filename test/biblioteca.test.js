@@ -1,4 +1,6 @@
-const Biblioteca = require("../src/biblioteca")
+const Biblioteca = require("../src/biblioteca");
+const Livro = require("../src/livro");
+const Usuario = require("../src/usuario");
 
 describe("Biblioteca", () => {
     test("deve criar uma biblioteca", () => {
@@ -32,12 +34,12 @@ describe("Biblioteca", () => {
             [],
             []
         )
-        new Livro(
+        const livro = new Livro(
             "O Senhor dos Anéis",
             "J.R.R. Tolkien",
             1954,
             "Fantasia",
-            null,
+            "222544321",
             true
         );
 
@@ -50,12 +52,12 @@ describe("Biblioteca", () => {
             []
         );
 
-        new Livro(
+        const livro = new Livro(
             "O Senhor dos Anéis",
             "J.R.R. Tolkien",
             1954,
             "Fantasia",
-            null,
+            "222544321",
             true
         );
 
@@ -76,12 +78,12 @@ describe("Biblioteca", () => {
             []
         );
 
-        new Livro(
+        const livro = new Livro(
             "O Senhor dos Anéis",
             "J.R.R. Tolkien",
             1954,
             "Fantasia",
-            null,
+            "222544321",
             true
         );
 
@@ -93,7 +95,7 @@ describe("Biblioteca", () => {
             "bolsonaro@brasil.com"
         );
 
-        expect(biblioteca.devolverLivro(usuario, livro)).toBe("Emprestimo realziado com sucesso!");
+        expect(biblioteca.devolverLivro(usuario, livro)).toBe("Devolução realziado com sucesso!");
     })
 
 })
