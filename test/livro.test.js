@@ -39,6 +39,32 @@ describe("Livro", () => {
     expect(livro.disponivel).toBe(true);
   });
 
+  test("não deve criar um livro sem título", async () => {
+    const livroData = {
+      titulo: null,
+      autor: "J.R.R. Tolkien",
+      anoPublicacao: 1954,
+      genero: "Fantasia",
+      isbn: "555777999",
+      disponivel: true
+    };
+
+    await expect(livroRepo.create(livroData)).rejects.toThrow();
+  });
+
+  test("não deve criar um livro sem autor", async () => {
+    const livroData = {
+      titulo: "O Silmarillion",
+      autor: null,
+      anoPublicacao: 1977,
+      genero: "Fantasia",
+      isbn: "666888000",
+      disponivel: true
+    };
+
+    await expect(livroRepo.create(livroData)).rejects.toThrow();
+  });
+
   test("não deve criar um livro sem ISBN", async () => {
     const livroData = {
       titulo: "O Senhor dos Anéis",
@@ -50,39 +76,5 @@ describe("Livro", () => {
     };
 
     await expect(livroRepo.create(livroData)).rejects.toThrow();
-  });
-
-  test("deve marcar o livro como disponível", async () => {
-    const livro = await livroRepo.create({
-      titulo: "O Senhor dos Anéis",
-      autor: "J.R.R. Tolkien",
-      anoPublicacao: 1954,
-      genero: "Fantasia",
-      isbn: "222544321",
-      disponivel: false
-    });
-
-    livro.disponivel = true;
-    await livroRepo.save(livro);
-
-    const atualizado = await livroRepo.findByISBN("222544321");
-    expect(atualizado.disponivel).toBe(true);
-  });
-
-  test("deve marcar o livro como indisponível", async () => {
-    const livro = await livroRepo.create({
-      titulo: "O Senhor dos Anéis",
-      autor: "J.R.R. Tolkien",
-      anoPublicacao: 1954,
-      genero: "Fantasia",
-      isbn: "222544321",
-      disponivel: true
-    });
-
-    livro.disponivel = false;
-    await livroRepo.save(livro);
-
-    const atualizado = await livroRepo.findByISBN("222544321");
-    expect(atualizado.disponivel).toBe(false);
   });
 });

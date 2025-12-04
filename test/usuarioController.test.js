@@ -40,6 +40,7 @@ describe("Usuário - Controller", () => {
     expect(result.usuario._id).toBeDefined();
     expect(result.usuario.nome).toBe("João Silva");
     expect(result.usuario.email).toBe("joao@email.com");
+    expect(result).toHaveProperty("msg", "Usuario cadastrado com sucesso!")
   });
 
   test("não deve criar usuário com CPF inválido", async () => {
