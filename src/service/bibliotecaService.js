@@ -21,11 +21,17 @@ class BibliotecaService {
     return { usuario, livro };
   }
 
-  async devolverLivro(usuarioName, livroISBN) {
-    const usuario = await this.usuarioRepo.findById(usuarioName);
+  async devolverLivro(usuarioID, livroISBN) {
+    const usuario = await this.usuarioRepo.findById(usuarioID);
     const livro = await this.livroRepo.findByISBN(livroISBN);
 
     if (!usuario || !livro) throw new Error("Dados inválidos");
+
+    // Verifica se o usuário realmente tem o livro
+    const possuiLivro = usuario.livrosEmprestados.some(id => id.equals(livro._id));
+    if (!possuiLivro) {
+      throw new Error("Livro não emprestado ao usuário");
+    }
 
     livro.disponivel = true;
     await this.livroRepo.save(livro);
@@ -38,6 +44,7 @@ class BibliotecaService {
 
     return { usuario, livro };
   }
+
 }
 
 module.exports = BibliotecaService;
